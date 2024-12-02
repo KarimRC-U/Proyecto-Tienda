@@ -39,29 +39,33 @@ class usuarioRepository implements IUsuario
         return $resultado->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function agregarAlCarrito($usuarioId, $productoid, $cantidad = 1)
+     public function agregarAlCarrito($carrito)
     {
         try {
 
-            $sqlCheck = "SELECT cantidad FROM carrito WHERE usuarioid = :usuarioid AND productoid = :productoid";
+            $usuarioid = $carrito->car_fk_usuario;
+            $idproducto = $carrito->car_fk_producto;
+            $cantidad = 1;
+
+            $sqlCheck = "SELECT cantidad FROM carrito WHERE car_fk_usuario = :car_fk_usuario AND car_fk_producto = :car_fk_producto";
             $stmtCheck = $this->conn->prepare($sqlCheck);
-            $stmtCheck->bindParam(':usuarioid', $usuarioId);
-            $stmtCheck->bindParam(':productoid', $productoid);
+            $stmtCheck->bindParam(':car_fk_usuario', $usuarioid);
+            $stmtCheck->bindParam(':car_fk_producto', $idproducto);
             $stmtCheck->execute();
             $result = $stmtCheck->fetch(PDO::FETCH_ASSOC);
     
             if ($result) {
-                $sqlUpdate = "UPDATE carrito SET cantidad = cantidad + :cantidad WHERE usuarioid = :usuarioid AND productoid = :productoid";
+                $sqlUpdate = "UPDATE carrito SET cantidad = cantidad + :cantidad WHERE car_fk_usuario = :car_fk_usuario AND idproducto = :car_fk_producto";
                 $stmtUpdate = $this->conn->prepare($sqlUpdate);
                 $stmtUpdate->bindParam(':cantidad', $cantidad);
-                $stmtUpdate->bindParam(':usuarioid', $usuarioId);
-                $stmtUpdate->bindParam(':productoid', $productoid);
+                $stmtUpdate->bindParam(':car_fk_usuario', $usuarioid);
+                $stmtUpdate->bindParam(':car_fk_producto', $idproducto);
                 $stmtUpdate->execute();
             } else {
-                $sqlInsert = "INSERT INTO carrito (usuarioid, productoid, cantidad) VALUES (:usuarioid, :productoid, :cantidad)";
+                $sqlInsert = "INSERT INTO carrito (car_fk_usuario, car_fk_producto, cantidad) VALUES (:car_fk_usuario, :car_fk_producto, :cantidad)";
                 $stmtInsert = $this->conn->prepare($sqlInsert);
-                $stmtInsert->bindParam(':usuarioid', $usuarioId);
-                $stmtInsert->bindParam(':productoid', $productoid);
+                $stmtInsert->bindParam(':car_fk_usuario', $usuarioid);
+                $stmtInsert->bindParam(':car_fk_producto', $idproducto);
                 $stmtInsert->bindParam(':cantidad', $cantidad);
                 $stmtInsert->execute();
             }
@@ -70,16 +74,20 @@ class usuarioRepository implements IUsuario
         } catch (Exception $e) {
             return ['status' => 'error', 'message' => 'Error al agregar producto al carrito: ' . $e->getMessage()];
         }
-    }
-    
+    } 
 
-    public function quitarDelCarrito($usuarioId, $productoid, $cantidad = 1)
+    public function quitarDelCarrito($carrito)
     {
         try {
-            $sqlCheck = "SELECT cantidad FROM carrito WHERE usuarioid = :usuarioid AND productoid = :productoid";
+
+            $usuarioid = $carrito->car_fk_usuario;
+            $idproducto = $carrito->car_fk_producto;
+            $cantidad = 1;
+
+            $sqlCheck = "SELECT cantidad FROM carrito WHERE usuarioid = :car_fk_usuario AND car_fk_producto = :car_fk_producto";
             $stmtCheck = $this->conn->prepare($sqlCheck);
-            $stmtCheck->bindParam(':usuarioid', $usuarioId);
-            $stmtCheck->bindParam(':productoid', $productoid);
+            $stmtCheck->bindParam(':car_fk_usuario', $usuarioid);
+            $stmtCheck->bindParam(':car_fk_producto', $idproducto);
             $stmtCheck->execute();
             $result = $stmtCheck->fetch(PDO::FETCH_ASSOC);
     
@@ -87,17 +95,17 @@ class usuarioRepository implements IUsuario
                 $nuevaCantidad = $result['cantidad'] - $cantidad;
     
                 if ($nuevaCantidad > 0) {
-                    $sqlUpdate = "UPDATE carrito SET cantidad = :cantidad WHERE usuarioid = :usuarioid AND productoid = :productoid";
+                    $sqlUpdate = "UPDATE carrito SET cantidad = :cantidad WHERE usuarioid = :car_fk_usuario AND idproducto = :car_fk_producto";
                     $stmtUpdate = $this->conn->prepare($sqlUpdate);
                     $stmtUpdate->bindParam(':cantidad', $nuevaCantidad);
-                    $stmtUpdate->bindParam(':usuarioid', $usuarioId);
-                    $stmtUpdate->bindParam(':productoid', $productoid);
+                    $stmtUpdate->bindParam(':car_fk_usuario', $usuarioid);
+                    $stmtUpdate->bindParam(':car_fk_producto', $idproducto);
                     $stmtUpdate->execute();
                 } else {
-                    $sqlDelete = "DELETE FROM carrito WHERE usuarioid = :usuarioid AND productoid = :productoid";
+                    $sqlDelete = "DELETE FROM carrito WHERE usuarioid = :car_fk_usuario AND idproducto = :car_fk_producto";
                     $stmtDelete = $this->conn->prepare($sqlDelete);
-                    $stmtDelete->bindParam(':usuarioid', $usuarioId);
-                    $stmtDelete->bindParam(':productoid', $productoid);
+                    $stmtDelete->bindParam(':car_fk_usuario', $usuarioid);
+                    $stmtDelete->bindParam(':car_fk_producto', $idproducto);
                     $stmtDelete->execute();
                 }
     
@@ -110,19 +118,19 @@ class usuarioRepository implements IUsuario
         }
     }
     
-    public function obtenerCarritoPorUsuario($usuarioId)
+    public function obtenerCarritoPorUsuario($usuarioid)
     {
-        $sql = "SELECT p.idproducto AS prd_id, p.prd_nombre, p.prd_precio, c.cantidad AS cardet_cantidad
+        $sql = "SELECT p.idproducto AS idproducto, p.prd_nombre, p.prd_precio, c.cantidad AS cardet_cantidad
                 FROM productos p
-                JOIN carrito c ON p.idproducto = c.productoid
-                WHERE c.usuarioid = :usuarioid";
+                JOIN carrito c ON p.idproducto = c.car_fk_producto
+                WHERE c.car_fk_usuario = :car_fk_usuario";
         $resultado = $this->conn->prepare($sql);
-        $resultado->bindParam(':usuarioid', $usuarioId);
+        $resultado->bindParam(':car_fk_usuario', $usuarioid);
         $resultado->execute();
         return $resultado->fetchAll(PDO::FETCH_ASSOC);
     }
     
-    public function crearOrden($usuarioId, $vendedorId)
+    public function crearOrden($usuarioid, $vendedorId)
     {
         $this->conn->beginTransaction();
 
@@ -130,32 +138,32 @@ class usuarioRepository implements IUsuario
                      VALUES (:vendedorid, :clienteid, NOW(), DATE_ADD(NOW(), INTERVAL 7 DAY))";
         $stmtOrden = $this->conn->prepare($sqlOrden);
         $stmtOrden->bindParam(':vendedorid', $vendedorId);
-        $stmtOrden->bindParam(':clienteid', $usuarioId);
+        $stmtOrden->bindParam(':clienteid', $usuarioid);
         $stmtOrden->execute();
 
         $ordenId = $this->conn->lastInsertId();
 
-        $sqlCarrito = "SELECT c.productoid, c.cantidad, p.prd_precio
+        $sqlCarrito = "SELECT c.idproducto, c.cantidad, p.prd_precio
                        FROM carrito c
-                       JOIN productos p ON c.productoid = p.idproducto
-                       WHERE c.usuarioid = :usuarioid";
+                       JOIN productos p ON c.idproducto = p.idproducto
+                       WHERE c.usuarioid = :car_fk_usuario";
         $stmtCarrito = $this->conn->prepare($sqlCarrito);
-        $stmtCarrito->bindParam(':usuarioid', $usuarioId);
+        $stmtCarrito->bindParam(':car_fk_usuario', $usuarioid);
         $stmtCarrito->execute();
 
         while ($producto = $stmtCarrito->fetch(PDO::FETCH_ASSOC)) {
             $sqlOrdenProducto = "INSERT INTO orden_productos (orpd_fk_orden_id, orpd_idproducto, orpd_cantidad)
-                                 VALUES (:ordenid, :productoid, :cantidad)";
+                                 VALUES (:ordenid, :car_fk_producto, :cantidad)";
             $stmtOrdenProducto = $this->conn->prepare($sqlOrdenProducto);
             $stmtOrdenProducto->bindParam(':ordenid', $ordenId);
-            $stmtOrdenProducto->bindParam(':productoid', $producto['productoid']);
+            $stmtOrdenProducto->bindParam(':car_fk_producto', $producto['idproducto']);
             $stmtOrdenProducto->bindParam(':cantidad', $producto['cantidad']);
             $stmtOrdenProducto->execute();
         }
 
-        $sqlEliminarCarrito = "DELETE FROM carrito WHERE usuarioid = :usuarioid";
+        $sqlEliminarCarrito = "DELETE FROM carrito WHERE usuarioid = :car_fk_usuario";
         $stmtEliminarCarrito = $this->conn->prepare($sqlEliminarCarrito);
-        $stmtEliminarCarrito->bindParam(':usuarioid', $usuarioId);
+        $stmtEliminarCarrito->bindParam(':car_fk_usuario', $usuarioid);
         $stmtEliminarCarrito->execute();
 
         $this->conn->commit();

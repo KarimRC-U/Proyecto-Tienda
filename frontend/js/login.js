@@ -22,8 +22,8 @@ const iniciarSesion = async () => {
     alert(resultado.message);
     console.log(resultado);
     if (resultado.status === 'success') {
-
         sessionStorage.setItem('loggedIn', 'true');
+        sessionStorage.setItem('usuarioid', resultado.usuarioid);
         sessionStorage.setItem('nombre', resultado.nombre);
         sessionStorage.setItem('usuario', resultado.usuario);
         sessionStorage.setItem('correo', resultado.correo);

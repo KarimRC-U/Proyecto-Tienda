@@ -67,16 +67,18 @@ $router->POST('/usuario/productos/categoria', function() use ($UsuarioController
 });
 
 //CARRITO
-$router->post('/usuario/carrito/agregar', function() use ($UsuarioController) {
-    return json_encode($UsuarioController->agregarAlCarrito());
+$router->put('/usuario/carrito/agregar', function() use ($UsuarioController) {
+    $carrito = json_decode(file_get_contents("php://input"), true);
+    return json_encode($UsuarioController->agregarAlCarrito($carrito));
 });
 
 $router->delete('/usuario/carrito/quitar', function() use ($UsuarioController) {
     return json_encode($UsuarioController->quitarDelCarrito());
 });
 
-$router->get('/usuario/carrito', function() use ($UsuarioController) {
-    return json_encode($UsuarioController->obtenerCarritoPorUsuario());
+$router->POST('/usuario/carrito', function() use ($UsuarioController) {
+    $usuarioid = json_decode(file_get_contents("php://input"), true);
+    return json_encode($UsuarioController->obtenerCarritoPorUsuario($usuarioid));
 });
 
 $router->post('/usuario/carrito/orden', function() use ($UsuarioController) {

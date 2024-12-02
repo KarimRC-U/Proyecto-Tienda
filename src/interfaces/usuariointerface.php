@@ -1,7 +1,7 @@
 <?php
     interface IUsuario {
-        public function agregarAlCarrito($idproducto, $usuarioId);
-        public function quitarDelCarrito($idproducto, $usuarioId);
+        public function agregarAlCarrito($carrito);
+        public function quitarDelCarrito($carrito);
         public function obtenerProductos();
         public function obtenerProductosPorBusqueda($busqueda);
         public function obtenerProductosPorCategoria($categoria);

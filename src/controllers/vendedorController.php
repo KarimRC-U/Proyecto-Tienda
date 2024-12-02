@@ -43,7 +43,7 @@
     }
 
     public function obtenerProductosPorBusqueda($busqueda) {
-      return $this->vendedorRepository->obtenerProductosPorBusqueda($busqueda);
+      return $this->vendedorRepository->obtenerProductosPorBusqueda($busqueda['prd_nombre']);
     }
 
     public function obtenerProductoPorId($idproducto) {

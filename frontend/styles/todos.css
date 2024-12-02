@@ -7,6 +7,14 @@ body {
     color: #333;
 }
 
+.btnColor {
+    padding: 6px 10px;
+    background-color: #febd69;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
 /* Header */
 .header {
     display: flex;

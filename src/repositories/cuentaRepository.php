@@ -27,12 +27,12 @@ require_once BASE_PATH . '/interfaces/cuentainterface.php';
             $resultado->bindParam(':direccion', $usuario->usr_direccion);
         
             if ($resultado->execute()) {
-                $usuarioId = $this->conn->lastInsertId();
+                $usuarioid = $this->conn->lastInsertId();
         
                 if ($usuario->isvendedor) {
-                    $sqlVendedor = "INSERT INTO vendedor (usr_fk_usuario, usr_ranking, usr_NumVentas) VALUES (:usuarioId, 0, 0)";
+                    $sqlVendedor = "INSERT INTO vendedor (usr_fk_usuario, usr_ranking, usr_NumVentas) VALUES (:usuarioid, 0, 0)";
                     $prepVendedor = $this->conn->prepare($sqlVendedor);
-                    $prepVendedor->bindParam(':usuarioId', $usuarioId);
+                    $prepVendedor->bindParam(':usuarioid', $usuarioid);
         
                     if ($prepVendedor->execute()) {
                         $response['status'] = 'success';
@@ -71,7 +71,7 @@ require_once BASE_PATH . '/interfaces/cuentainterface.php';
         
         if (!empty($resultado)) {
 
-            $usuarioId = $resultado['usuarioId'];
+            $usuarioid = $resultado['usr_id'];
             $usr_usuario = $resultado['usr_usuario'];
             $usr_psword = $resultado['usr_psword'];
             $usr_nombre = $resultado['usr_nombre'];
@@ -86,14 +86,14 @@ require_once BASE_PATH . '/interfaces/cuentainterface.php';
                 $response['status'] = 'success';
                 $response['message'] = '¡Bienvenido! Has iniciado sesión correctamente.';
                 $response['redirect'] = '../index.html';
-                $response['usuarioId'] = $usuarioId;
+                $response['usuarioid'] = $usuarioid;
                 $response['usuario'] = $usr_usuario;
                 $response['nombre'] = $usr_nombre . " " . $usr_apaterno . " " . $usr_amaterno;
                 $response['correo'] = $usr_correo;
 
                 $sql = 'SELECT * FROM vendedor WHERE usr_fk_usuario = :usr_usuario';
                 $prep = $this->conn->prepare($sql);
-                $prep->bindParam(':usr_usuario', $usuarioId);
+                $prep->bindParam(':usr_usuario', $usuarioid);
                 $prep->execute();
                 $resultado = $prep->fetch();
                 
@@ -175,7 +175,7 @@ require_once BASE_PATH . '/interfaces/cuentainterface.php';
     
     public function borrarusuario($idusuario)
     {
-        $sql = "DELETE FROM usuarios WHERE usuarioId = :idusuario";
+        $sql = "DELETE FROM usuarios WHERE usuarioid = :idusuario";
         $resultado = $this->conn->prepare($sql);
         $resultado->bindParam(':idusuario',$idusuario);
        
@@ -188,7 +188,7 @@ require_once BASE_PATH . '/interfaces/cuentainterface.php';
 
     public function obtenerusuarioPorId($id)
     {
-        $sql = "SELECT * FROM usuarios WHERE usuarioId = :id";
+        $sql = "SELECT * FROM usuarios WHERE usuarioid = :id";
         $resultado = $this->conn->prepare($sql);
         $resultado->bindParam(':id',$id);
         $resultado->execute();

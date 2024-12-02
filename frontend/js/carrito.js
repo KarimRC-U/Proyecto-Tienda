@@ -5,24 +5,29 @@ const payButton = document.getElementById('pay-button');
 
 const cargarCarrito = async () => {
     try {
-        const url = `${apiURL}/usuario/carrito`;
-        const respuesta = await fetch(url, { method: 'GET' });
+        const usuarioid = sessionStorage.getItem('usuarioid');
 
-        if (!respuesta.ok) {
-            throw new Error(`HTTP Error: ${respuesta.status}`);
+        const send = {
+            usuarioid: usuarioid
         }
 
+        const respuesta = await fetch(apiURL + '/usuario/carrito', {
+            method: 'POST',
+            body: JSON.stringify(send)
+        })
+
         const productos = await respuesta.json();
+
         tablaCarrito.innerHTML = '';
         let total = 0;
-
+      
         productos.forEach((producto) => {
             const row = tablaCarrito.insertRow();
 
-            row.insertCell(0).textContent = producto.nombre;
-            row.insertCell(1).textContent = `$${producto.precio.toFixed(2)}`;
-            row.insertCell(2).textContent = producto.cantidad;
-            row.insertCell(3).textContent = `$${(producto.precio * producto.cantidad).toFixed(2)}`;
+            row.insertCell(0).textContent = producto.prd_nombre;
+            row.insertCell(1).textContent = `$${producto.prd_precio}`;
+            row.insertCell(2).textContent = producto.cardet_cantidad;
+            row.insertCell(3).textContent = `$${(producto.prd_precio * producto.cardet_cantidad)}`;
 
             const eliminarCell = row.insertCell(4);
             const eliminarBtn = document.createElement('button');
@@ -32,10 +37,10 @@ const cargarCarrito = async () => {
             eliminarBtn.addEventListener('click', () => eliminarProducto(producto.id));
             eliminarCell.appendChild(eliminarBtn);
 
-            total += producto.precio * producto.cantidad;
+            total += producto.prd_precio * producto.cardet_cantidad;
         });
 
-        totalContainer.textContent = `Total: $${total.toFixed(2)}`;
+        totalContainer.textContent = `Total: $${total}`;
     } catch (error) {
         console.error('Error al cargar el carrito:', error);
         alert('Ocurrió un error al cargar el carrito.');
@@ -64,13 +69,13 @@ const agregarProducto = async (producto) => {
     }
 };
 
-const eliminarProducto = async (productoId) => {
+const eliminarProducto = async (idproducto) => {
     try {
         const url = `${apiURL}/usuario/carrito/quitar`;
         const respuesta = await fetch(url, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ id: productoId }),
+            body: JSON.stringify({ id: idproducto }),
         });
 
         const resultado = await respuesta.json();

@@ -47,6 +47,7 @@ const crearProducto = async () => {
     const response = await resultado.json()
     if (response.mensaje === 'Producto Creado') {
         showAlert('Producto Agregado', 'success')
+        obtenerCategorias()
         loadProductos()
         productForm.reset()
     } else if (response.mensaje === 'Producto Actualizado') {

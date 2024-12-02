@@ -1,4 +1,4 @@
-
+/*
 document.addEventListener("DOMContentLoaded", function() {
     const numberOfFlakes = 100;
     const snowContainer = document.body;
@@ -13,4 +13,4 @@ document.addEventListener("DOMContentLoaded", function() {
         snowflake.style.animationDelay = Math.random() * 5 + 's';
     }
 });
-
+*/

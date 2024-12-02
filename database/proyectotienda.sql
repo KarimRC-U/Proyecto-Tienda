@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:8889
--- Tiempo de generación: 30-11-2024 a las 23:12:00
+-- Tiempo de generación: 02-12-2024 a las 04:53:29
 -- Versión del servidor: 5.7.24
 -- Versión de PHP: 8.3.1
 
@@ -32,6 +32,13 @@ CREATE TABLE `carrito` (
   `car_fk_usuario` int(11) NOT NULL,
   `cantidad` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `carrito`
+--
+
+INSERT INTO `carrito` (`car_fk_producto`, `car_fk_usuario`, `cantidad`) VALUES
+(25, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -123,9 +130,45 @@ CREATE TABLE `productos` (
 --
 
 INSERT INTO `productos` (`idproducto`, `prd_nombre`, `prd_descrip`, `prd_precio`, `prd_marca`, `prd_imagen`, `prd_estado`, `prd_categoria`, `prd_id_publicacion`, `prd_id_vendedor`) VALUES
-(25, 'Libreta', 'Azul', '25.23', 'Scribe', NULL, 'Disponible', NULL, NULL, NULL),
-(31, 'Prueba1', 'prueba', '123.00', 'asda', NULL, 'dasdas', NULL, NULL, NULL),
-(32, 'Jordan', 'tennis ', '123.00', 'Nike', 'data:image/webp;base64,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', 'Disponible', NULL, NULL, NULL);
+(25, 'Libreta', 'Azul', 25.23, 'Scribe', 'https://papeleriadelahorro.mx/cdn/shop/products/75613027.jpg?v=1631197983', 'Disponible', 4, NULL, NULL),
+(43, 'Jeans ajustados', 'Jeans de talle alto y corte ajustado', 49.99, 'Levi\'s', 'imagen3.jpg', 'Nuevo', 1, NULL, NULL),
+(44, 'Chaqueta de cuero', 'Chaqueta de cuero de diseño elegante', 99.99, 'H&M', 'imagen4.jpg', 'Nuevo', 1, NULL, NULL),
+(45, 'Falda plisada', 'Falda larga de estilo bohemio', 59.99, 'Bershka', 'imagen5.jpg', 'Nuevo', 1, NULL, NULL),
+(46, 'Smartphone Samsung Galaxy', 'Smartphone con pantalla AMOLED y 128GB de almacenamiento', 799.99, 'Samsung', 'smartphone.jpg', 'Nuevo', 2, NULL, NULL),
+(47, 'Laptop HP Spectre', 'Laptop ultradelgada con procesador Intel i7', 1299.99, 'HP', 'laptop.jpg', 'Nuevo', 2, NULL, NULL),
+(48, 'Auriculares Bose', 'Auriculares inalámbricos con cancelación de ruido', 299.99, 'Bose', 'auriculares.jpg', 'Nuevo', 2, NULL, NULL),
+(49, 'Smartwatch Apple', 'Reloj inteligente con monitoreo de salud', 399.99, 'Apple', 'smartwatch.jpg', 'Nuevo', 2, NULL, NULL),
+(50, 'Cámara DSLR Canon', 'Cámara profesional con lente de 18-55mm', 899.99, 'Canon', 'camara.jpg', 'Nuevo', 2, NULL, NULL),
+(51, 'The Last of Us 2', 'Videojuego de acción y aventura, exclusivo para PS4', 59.99, 'Naughty Dog', 'tloz2.jpg', 'Nuevo', 3, NULL, NULL),
+(52, 'Cyberpunk 2077', 'Juego de rol y acción en un mundo futurista', 49.99, 'CD Projekt', 'cyberpunk.jpg', 'Nuevo', 3, NULL, NULL),
+(53, 'FIFA 24', 'Simulador de fútbol con modos en línea y campaña', 59.99, 'EA Sports', 'fifa24.jpg', 'Nuevo', 3, NULL, NULL),
+(54, 'Minecraft', 'Juego de construcción y aventuras en un mundo abierto', 19.99, 'Mojang', 'minecraft.jpg', 'Nuevo', 3, NULL, NULL),
+(55, 'Call of Duty: Modern Warfare', 'Juego de disparos en primera persona, con modo multijugador', 59.99, 'Activision', 'codmw.jpg', 'Nuevo', 3, NULL, NULL),
+(56, 'Cien Años de Soledad', 'Obra maestra de Gabriel García Márquez', 15.99, 'Editorial Sudamericana', 'cienanos.jpg', 'Nuevo', 4, NULL, NULL),
+(57, '1984', 'Novela distópica de George Orwell', 12.99, 'Harvill Secker', '1984.jpg', 'Nuevo', 4, NULL, NULL),
+(58, 'El Hobbit', 'Fantasía épica escrita por J.R.R. Tolkien', 14.99, 'HarperCollins', 'hobbit.jpg', 'Nuevo', 4, NULL, NULL),
+(59, 'Orgullo y Prejuicio', 'Clásico de Jane Austen', 9.99, 'Penguin Books', 'orgullo.jpg', 'Nuevo', 4, NULL, NULL),
+(60, 'El Alquimista', 'Fábula de Paulo Coelho sobre el destino y la realización personal', 10.99, 'Planeta', 'alquimista.jpg', 'Nuevo', 4, NULL, NULL),
+(61, 'Cafetera Nespresso', 'Cafetera de cápsulas con tecnología de café expreso', 149.99, 'Nespresso', 'cafetera.jpg', 'Nuevo', 5, NULL, NULL),
+(62, 'Batidora KitchenAid', 'Batidora de pie con varios accesorios', 349.99, 'KitchenAid', 'batidora.jpg', 'Nuevo', 5, NULL, NULL),
+(63, 'Olla a presión', 'Olla de acero inoxidable, ideal para cocinar rápido', 79.99, 'Tefal', 'olla.jpg', 'Nuevo', 5, NULL, NULL),
+(64, 'Sartén antiadherente', 'Sartén de 30 cm con recubrimiento antiadherente', 39.99, 'Tefal', 'sarten.jpg', 'Nuevo', 5, NULL, NULL),
+(65, 'Cuchillos de cocina', 'Set de cuchillos de alta calidad para todo tipo de alimentos', 99.99, 'Cuisinart', 'cuchillos.jpg', 'Nuevo', 5, NULL, NULL),
+(66, 'Comida para perros', 'Alimento balanceado para perros de todas las edades', 24.99, 'Pedigree', 'comida_perro.jpg', 'Nuevo', 6, NULL, NULL),
+(67, 'Arenero para gatos', 'Arenero de plástico con tapa para gatos', 19.99, 'Petmate', 'arenero.jpg', 'Nuevo', 6, NULL, NULL),
+(68, 'Cama para perros', 'Cama suave y cómoda para perros pequeños', 49.99, 'K&H', 'cama_perro.jpg', 'Nuevo', 6, NULL, NULL),
+(69, 'Juguete para gatos', 'Pelota interactiva para mantener a los gatos entretenidos', 9.99, 'Petstages', 'juguete_gato.jpg', 'Nuevo', 6, NULL, NULL),
+(70, 'Correa para perros', 'Correa extensible para paseos seguros', 14.99, 'Flexi', 'correa.jpg', 'Nuevo', 6, NULL, NULL),
+(71, 'Muñeca Barbie', 'Muñeca clásica de Barbie con diferentes accesorios', 19.99, 'Mattel', 'barbie.jpg', 'Nuevo', 7, NULL, NULL),
+(72, 'LEGO City', 'Set de construcción LEGO para crear una ciudad', 49.99, 'LEGO', 'lego_city.jpg', 'Nuevo', 7, NULL, NULL),
+(73, 'Peluche de oso', 'Peluche suave de oso para niños', 14.99, 'Build-A-Bear', 'peluche.jpg', 'Nuevo', 7, NULL, NULL),
+(74, 'Juego de mesa Monopoly', 'Versión clásica de Monopoly, juego de mesa', 29.99, 'Hasbro', 'monopoly.jpg', 'Nuevo', 7, NULL, NULL),
+(75, 'Carro de control remoto', 'Carro a control remoto con velocidad ajustable', 39.99, 'Fisher-Price', 'carro_rc.jpg', 'Nuevo', 7, NULL, NULL),
+(76, 'Cerveza Corona', 'Cerveza mexicana tipo lager', 1.99, 'Corona', 'cerveza.jpg', 'Nuevo', 8, NULL, NULL),
+(77, 'Vino Tinto', 'Vino tinto seco de la región de Napa', 12.99, 'Napa Valley', 'vino.jpg', 'Nuevo', 8, NULL, NULL),
+(78, 'Jugo de Naranja', 'Jugo natural 100% de naranja', 3.99, 'Minute Maid', 'jugo.jpg', 'Nuevo', 8, NULL, NULL),
+(79, 'Agua Mineral', 'Agua mineral con gas', 1.29, 'San Pellegrino', 'agua.jpg', 'Nuevo', 8, NULL, NULL),
+(80, 'Café Starbucks', 'Café tostado en grano para preparar en casa', 7.99, 'Starbucks', 'cafe.jpg', 'Nuevo', 8, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -145,6 +188,14 @@ CREATE TABLE `usuarios` (
   `usr_direccion` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Volcado de datos para la tabla `usuarios`
+--
+
+INSERT INTO `usuarios` (`usr_id`, `usr_nombre`, `usr_apaterno`, `usr_amaterno`, `usr_usuario`, `usr_psword`, `usr_correo`, `usr_telefono`, `usr_direccion`) VALUES
+(1, 'Karim', 'Rivera', 'Calderon', 'karim', '$2y$10$S6ikwxUTHXwFVfLx6Tcugeo/DaEddzedn8lArAknRZZhMN8Sv6xmK', 'karimkyurem@gmail.com', '123445', 'direccionfalsa'),
+(2, 'Karim', 'r', 'c', 'correo@mail.com', '$2y$10$jJE3rbidH728NA0GId4i4O1nMyvjfDlETOIsNb1NykFXR9n15Qz/a', 'mail@mail.com', '123', '123');
+
 -- --------------------------------------------------------
 
 --
@@ -156,6 +207,14 @@ CREATE TABLE `vendedor` (
   `usr_ranking` int(11) DEFAULT NULL,
   `usr_NumVentas` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `vendedor`
+--
+
+INSERT INTO `vendedor` (`usr_fk_usuario`, `usr_ranking`, `usr_NumVentas`) VALUES
+(1, 0, 0),
+(2, 0, 0);
 
 --
 -- Índices para tablas volcadas
@@ -243,57 +302,13 @@ ALTER TABLE `orden_productos`
 -- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
-  MODIFY `idproducto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `idproducto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `usr_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- Restricciones para tablas volcadas
---
-
---
--- Filtros para la tabla `carrito`
---
-ALTER TABLE `carrito`
-  ADD CONSTRAINT `carrito_ibfk_1` FOREIGN KEY (`car_fk_producto`) REFERENCES `productos` (`idproducto`),
-  ADD CONSTRAINT `carrito_ibfk_2` FOREIGN KEY (`car_fk_usuario`) REFERENCES `usuarios` (`usuarioId`);
-
---
--- Filtros para la tabla `inventario`
---
-ALTER TABLE `inventario`
-  ADD CONSTRAINT `inventario_ibfk_1` FOREIGN KEY (`inv_id_producto`) REFERENCES `productos` (`idproducto`);
-
---
--- Filtros para la tabla `ordenes`
---
-ALTER TABLE `ordenes`
-  ADD CONSTRAINT `ordenes_ibfk_1` FOREIGN KEY (`ord_vendedor`) REFERENCES `vendedor` (`usr_fk_usuario`),
-  ADD CONSTRAINT `ordenes_ibfk_2` FOREIGN KEY (`ord_cliente`) REFERENCES `usuarios` (`usr_id`);
-
---
--- Filtros para la tabla `orden_productos`
---
-ALTER TABLE `orden_productos`
-  ADD CONSTRAINT `orden_productos_ibfk_1` FOREIGN KEY (`orpd_idproducto`) REFERENCES `productos` (`idproducto`),
-  ADD CONSTRAINT `orden_productos_ibfk_2` FOREIGN KEY (`orpd_idorden`) REFERENCES `ordenes` (`ord_id`);
-
---
--- Filtros para la tabla `productos`
---
-ALTER TABLE `productos`
-  ADD CONSTRAINT `productos_ibfk_1` FOREIGN KEY (`prd_categoria`) REFERENCES `categorias` (`cat_id`),
-  ADD CONSTRAINT `productos_ibfk_2` FOREIGN KEY (`prd_id_vendedor`) REFERENCES `vendedor` (`usr_fk_usuario`);
-
---
--- Filtros para la tabla `vendedor`
---
-ALTER TABLE `vendedor`
-  ADD CONSTRAINT `vendedor_ibfk_1` FOREIGN KEY (`usr_fk_usuario`) REFERENCES `usuarios` (`usr_id`);
+  MODIFY `usr_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

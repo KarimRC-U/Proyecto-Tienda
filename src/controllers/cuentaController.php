@@ -42,12 +42,12 @@
       return $this->cuentaRepository->actualizarusuario($usuario);
     }
 
-    public function borrarUsuario($usuarioId) {
-      return $this->cuentaRepository->borrarusuario($usuarioId['id']);
+    public function borrarUsuario($usuarioid) {
+      return $this->cuentaRepository->borrarusuario($usuarioid['id']);
     }
 
-    public function obtenerusuarioPorId($usuarioId) {
-      return $this->cuentaRepository->obtenerusuarioPorId($usuarioId['id']);
+    public function obtenerusuarioPorId($usuarioid) {
+      return $this->cuentaRepository->obtenerusuarioPorId($usuarioid['id']);
     }
   }
 ?>

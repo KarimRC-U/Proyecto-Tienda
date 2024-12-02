@@ -38,6 +38,7 @@ const obtenerProductosPorCategoria = async (categoriaId) => {
         resultado.forEach((item) => {
             const clone = templateCard.cloneNode(true);
             clone.querySelector('h5').textContent = item.prd_nombre;
+            clone.getElementById("idproducto").value = `${item.idproducto}`;
             clone.querySelector('p:nth-child(2)').textContent = `Descripción: ${item.prd_descrip}`;
             clone.querySelector('p:nth-child(3)').textContent = `Precio: $${item.prd_precio}`;
             clone.querySelector('p:nth-child(4)').textContent = `Marca: ${item.prd_marca}`;
@@ -75,6 +76,7 @@ const obtenerProductosPorBusqueda = async (busqueda) => {
             resultado.forEach((item) => {
                 const clone = templateCard.cloneNode(true);
                 clone.querySelector('h5').textContent = item.prd_nombre;
+                clone.getElementById("idproducto").value = `${item.idproducto}`;
                 clone.querySelector('p:nth-child(2)').textContent = `Descripción: ${item.prd_descrip}`;
                 clone.querySelector('p:nth-child(3)').textContent = `Precio: $${item.prd_precio}`;
                 clone.querySelector('p:nth-child(4)').textContent = `Marca: ${item.prd_marca}`;
@@ -114,6 +116,7 @@ const obtenerProductos = async () => {
         resultado.forEach((item) => {
             const clone = templateCard.cloneNode(true);
             clone.querySelector('h5').textContent = item.prd_nombre;
+            clone.getElementById("idproducto").value = `${item.idproducto}`;
             clone.querySelector('p:nth-child(2)').textContent = `Descripción: ${item.prd_descrip}`;
             clone.querySelector('p:nth-child(3)').textContent = `Precio: $${item.prd_precio}`;
             clone.querySelector('p:nth-child(4)').textContent = `Marca: ${item.prd_marca}`;
@@ -128,3 +131,19 @@ const obtenerProductos = async () => {
     }
 };
 
+const agregaralCarrito = async () => {
+    {
+        const usuarioid = sessionStorage.getItem('usuarioid');
+        const idproducto = document.getElementById('idproducto').value
+        const send = {
+            usuarioid: usuarioid,
+            idproducto: idproducto
+        }
+        const res = await fetch(apiURL + '/usuario/carrito/agregar', {
+            method: 'PUT',
+            body: JSON.stringify(send)
+        })
+        const carrito = await res.json()
+        console.log('@@ carrito =>', carrito)
+    }
+};
